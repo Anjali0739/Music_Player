@@ -1,0 +1,119 @@
+/* ---------- Page & layout ---------- */
+body {
+  margin: 0;
+  padding: 60px 80px;
+  font-family: 'Sofia', sans-serif;
+  background: #000;     /* black background like screenshot */
+  color: #fff;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Each item: left player + right lyrics */
+.player-layout {
+  display: flex;
+  align-items: flex-start;
+  gap: 80px;          /* space between player and lyrics */
+  width: 100%;
+  max-width: 1400px;
+  margin-bottom: 50px;
+  /* left align the whole layout (like your screenshot) */
+}
+
+/* ---------- Player card (left) ---------- */
+.music-player {
+  width: 360px;
+  background: linear-gradient(180deg, #0b0b0b 0%, #070707 100%);
+  padding: 28px;
+  border-radius: 14px;
+  box-shadow:
+    0 0 80px rgba(0,0,0,0.9),
+    0 0 30px rgba(125,74,237,0.04);
+  border-left: 1px solid rgba(255,255,255,0.02);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* album image */
+.cover {
+  width: 100%;
+  display:flex;
+  justify-content:center;
+  margin-bottom: 20px;
+}
+.cover img {
+  width: 280px;               /* square cover like screenshot */
+  height: 280px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8), 0 0 36px rgba(125,74,237,0.06);
+  display: block;
+}
+
+/* Title + artist */
+.title {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 12px;
+}
+.title h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #bfbfbf;
+  text-transform: lowercase;
+}
+.title h1 {
+  margin: 6px 0 0;
+  font-size: 34px;
+  line-height: 1;
+  font-weight: 800;
+  color: #fff;
+}
+
+/* controls (prev / next) */
+.controls {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin: 14px 0;
+}
+.controls a { color: #7d4aed; text-decoration: none; transition: transform .15s, color .15s; }
+.controls a:hover { color: #fff; transform: translateY(-3px); }
+.controls .fa-2x { font-size: 28px; }
+
+/* audio block */
+.lecture { width: 100%; margin-top: 6px; }
+
+/* Use MediaElement defaults with small overrides */
+.mejs__container { background: transparent !important; }
+.mejs__controls { background: transparent !important; border-top: none; }
+.mejs__time-rail { margin-top: 8px; }
+
+/* color the progress/played bar (may work depending on ME player version) */
+.mejs__time-current { background: #7d4aed !important; }
+
+/* ---------- Lyrics (right) ---------- */
+.lyrics-column { flex: 1; max-width: 820px; }
+.lyrics {
+  white-space: pre-wrap; /* keep lines */
+  font-size: 18px;
+  line-height: 1.6;
+  color: #e6e6e6;
+  padding: 20px;
+  background: transparent;
+}
+
+/* Small screen: stack vertically */
+@media (max-width: 900px) {
+  body { padding: 24px; }
+  .player-layout { flex-direction: column; gap: 24px; }
+  .music-player { width: 100%; align-items: center; padding: 20px; }
+  .cover img { width: 220px; height: 220px; }
+  .lyrics { font-size: 16px; }
+}
+
+/* optional: hide native scrollbar for clean look */
+::-webkit-scrollbar { height: 6px; width: 6px; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 6px; }

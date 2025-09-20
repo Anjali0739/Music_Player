@@ -1,0 +1,94 @@
+{% comment %} <html>
+    <head>
+        <title>Music Player</title>
+    </head>
+    <body>
+        <div class="music-player"></div>
+        {% for item in page_obj %}
+            <div class="cover">
+                <img src="{{item.image.url}}"/>
+            </div>
+
+            <div class="title">
+                <h3>
+                    {{item.artist}}
+                </h3>
+                <h1>
+                    {{item.title}}
+                </h1>
+            </div>
+
+            <center>
+                <a href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% endif %}">
+                    <i class="fa fa-step-backward fa-2x"></i>
+                </a> &nbsp; &nbsp; &nbsp;
+                <a href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% endif %}">
+                    <i class="fa fa-step-forward fa-2x"></i>
+                </a>
+            </center>
+
+            <div class="lecture">
+                <audio class="fc-media" style="width: 100%;" id="fc-media">
+                    <source src="{% if item.audio_file %}{{ item.audio_file.url }}{% else %}{{ item.audio_link }}{% endif %}" type="audio/mp3">
+                </audio>
+            </div>
+
+        {% endfor %}
+            <div class="lyrics">
+                {% if item.lyrics %}
+                    {{ item.lyrics }}
+                {% else %}
+                    <p>No lyrics available.</p>
+                {% endif %}
+            </div>
+    </body>
+</html> {% endcomment %}
+
+
+
+
+
+
+{# main.html - fragment #}
+{% for item in page_obj %}
+<div class="player-layout">
+  <!-- LEFT: Player Card -->
+  <div class="music-player">
+    <div class="cover">
+      <img src="{{ item.image.url }}" alt="{{ item.title }}">
+    </div>
+
+    <div class="title">
+      <h3>{{ item.artist }}</h3>
+      <h1>{{ item.title }}</h1>
+    </div>
+
+    <div class="controls">
+      <a class="prev" href="{% if page_obj.has_previous %}?page={{ page_obj.previous_page_number }}{% else %}#{% endif %}">
+        <i class="fa fa-step-backward fa-2x"></i>
+      </a>
+
+      <a class="next" href="{% if page_obj.has_next %}?page={{ page_obj.next_page_number }}{% else %}#{% endif %}">
+        <i class="fa fa-step-forward fa-2x"></i>
+      </a>
+    </div>
+
+    <div class="lecture">
+      <audio class="fc-media" id="fc-media-{{ forloop.counter }}" preload="none">
+        <source src="{% if item.audio_file %}{{ item.audio_file.url }}{% else %}{{ item.audio_link }}{% endif %}" type="audio/mpeg">
+      </audio>
+    </div>
+  </div>
+
+  <!-- RIGHT: Lyrics -->
+  <div class="lyrics-column">
+    <div class="lyrics">
+      {% if item.lyrics %}
+        {{ item.lyrics }}
+      {% else %}
+        <p>No lyrics available.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endfor %}
